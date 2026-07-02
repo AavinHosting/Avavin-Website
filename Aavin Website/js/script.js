@@ -1,4 +1,3 @@
-
 //document ready popup carousel
 $(document).ready(function(){
     //Event for pushed the video
@@ -6,22 +5,103 @@ $(document).ready(function(){
         pause: true,
         interval: false
     });
-});
 
-//document ready popup carousel
-$(document).ready(function(){
-    //Event for pushed the video
+
+	//Event for pushed the video
     $('#demo1').carousel({
         pause: true,
         interval: false
     });
+
+
+	// Open the portfolio modal on the slide that matches the clicked logo.
+	// The logos are listed in the same order as the carousel slides, so a
+	// logo's position among the links sharing its modal target is its slide index.
+	$('.portfolio .lk').click(function() {
+		var target = $(this).data('target');
+		var carousel = (target === '#merlin') ? '#demo' : '#demo1';
+		var index = $('.portfolio .lk[data-target="' + target + '"]').index(this);
+		$(carousel).carousel(index);
+	});
+
+
+	// Video Loader
+	setTimeout(() => {
+		$('.loader-vid').fadeOut(750)
+	}, 3000)
+
+
+	//readmore button 
+	const moreText = "View More";
+	const lessText = "View less";
+	const moreButton = $("button.readmorebtn");
+	moreButton.click(function() {
+		const $this = $(this);
+		$this.text($this.text() == moreText ? lessText : moreText).next(".more").slideToggle("fast");
+	});
+
+
+	$("#investorsForm").submit(function() {
+        $("#passwordInvestors").keyup(function(event) {
+            event.preventDefault()
+
+            if (event.keyCode === 13 || event.keyCode === 36) {
+                $("#submitInvestors").click()
+            }
+        })
+
+        return false
+    })
+
+
+    $("#investors-modal .btn").click(function() {
+        const password = "WhiteHat2020!"
+
+        if($("#passwordInvestors").val() !== password) {
+            $(".invalid-feedback").removeClass('invisible')
+        }
+        else {
+            $(".modal form").addClass('invisible')
+
+            document.getElementById('secret').innerHTML = `
+            <iframe src="https://player.vimeo.com/video/403076335" width="100%" height="500" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
+            `
+        }
+    })
+	
+
+	// sticky header
+	$(window).scroll(function() {
+		var currentScroll = $(this).scrollTop();
+		if(currentScroll > 100) {
+			$('nav').addClass('sticky-bg');
+		} else {
+			$('nav').removeClass('sticky-bg');
+		}
+	});
+
+
+	$('.counter-count').each(function () {
+		$(this).prop('Counter',0).animate({
+			Counter: $(this).text()
+		}, {
+			duration: 5000,
+			easing: 'swing',
+			step: function (now) {
+				$(this).text(Math.ceil(now));
+			}
+		});
+	});
+
+	
+	//Scroll Down functionality
+    $('.nav-item').click(function() {
+        $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top - 70}, 350, 'linear')
+    })
+	$('.navbar-collapse a').click(function(){
+		$(".navbar-collapse").collapse('hide');
+	});
 });
-
-  // Video Loader
-    setTimeout(() => {
-        $('.loader-vid').fadeOut(750)
-    }, 3000)
-
 
 
 
@@ -304,84 +384,3 @@ $(document).ready(function($){
 		return window.getComputedStyle(document.querySelector('.cd-horizontal-timeline'), '::before').getPropertyValue('content').replace(/'/g, "").replace(/"/g, "");
 	}
 });
-
-
-//readmore button 
-
-const moreText = "View More";
-const lessText = "View less";
-const moreButton = $("button.readmorebtn");
-
-moreButton.click(function() {
-  const $this = $(this);
-  $this.text($this.text() == moreText ? lessText : moreText).next(".more").slideToggle("fast");
-});
-
-
-
-
-$(document).ready(function(){
-   
-    $("#investorsForm").submit(function() {
-        $("#passwordInvestors").keyup(function(event) {
-            event.preventDefault()
-
-            if (event.keyCode === 13 || event.keyCode === 36) {
-                $("#submitInvestors").click()
-            }
-        })
-
-        return false
-    })
-
-
-    $("#investors-modal .btn").click(function() {
-        const password = "WhiteHat2020!"
-
-        if($("#passwordInvestors").val() !== password) {
-            $(".invalid-feedback").removeClass('invisible')
-        }
-        else {
-            $(".modal form").addClass('invisible')
-
-            document.getElementById('secret').innerHTML = `
-            <iframe src="https://player.vimeo.com/video/403076335" width="100%" height="500" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>
-            `
-        }
-    })
-	
-	// sticky header
-	
-	$(window).scroll(function() {
-		var currentScroll = $(this).scrollTop();
-		if(currentScroll > 100) {
-			$('nav').addClass('sticky-bg');
-		} else {
-			$('nav').removeClass('sticky-bg');
-		}
-	});
-
-
-	$('.counter-count').each(function () {
-		$(this).prop('Counter',0).animate({
-			Counter: $(this).text()
-		}, {
-			duration: 5000,
-			easing: 'swing',
-			step: function (now) {
-				$(this).text(Math.ceil(now));
-			}
-		});
-	});
-
-	
-	//Scroll Down functionality
-    $('.nav-item').click(function() {
-        $('html, body').animate({scrollTop: $($(this).attr('href')).offset().top - 70}, 350, 'linear')
-    })
-	
-	$('.navbar-collapse a').click(function(){
-            $(".navbar-collapse").collapse('hide');
-        });
-	
-})
